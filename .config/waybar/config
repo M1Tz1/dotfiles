@@ -1,18 +1,21 @@
 {
+    "position": "bottom",
     "height": 30,
-    "spacing": 4,
     "modules-left": [
+        "sway/workspaces",
         "sway/window"
     ],
     "modules-right": [
         "network",
+        "wireplumber",
         "battery",
         "tray",
         "clock"
     ],
     "sway/window": {
         "format": "{title}",
-        "icon": true
+        "icon": true,
+        "icon-size": 24
     },
     "network": {
         "format-wifi": "{essid} ({signalStrength}%) ",
@@ -21,6 +24,16 @@
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    "wireplumber": {
+        "format": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": [
+            "",
+            "",
+            ""
+        ],
+        "max-volume": 120
     },
     "battery": {
         "states": {
@@ -41,6 +54,7 @@
         ]
     },
     "tray": {
+        "icon-size": 24,
         "spacing": 10
     },
     "clock": {

@@ -1,0 +1,42 @@
+name: CI Windows
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Download
+      run: Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip -OutFile ngrok.zip
+    # run: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+    - name: Extract
+      run: Expand-Archive ngrok.zip
+    - name: Auth
+      run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
+      env:
+        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+    - name: Enable TS
+      run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+    - run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+    - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+    - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "P@ssw0rd!" -Force)
+    - name: Create Tunnel
+      run: |
+        .\ngrok\ngrok.exe tcp 3389 &
+        Start-Sleep -Seconds 5
+        curl http://localhost:4040/api/tunnels/ | jq .tunnels[0].public_url
+        Start-Sleep -Seconds 216000
+        Exit
+    - run: |
+        $n=1
+        while($true)
+        {
+          $n += 1
+        }
+      shell: pwsh
+# https://www.sharepointdiary.com/2020/09/powershell-sleep-command.html
+# https://www.javatpoint.com/powershell-while-loop#:~:text=Syntax%20of%20While%20loop&text=The%20condition%20returns%20the%20Boolean,the%20statement%20after%20the%20loop.
+# https://geekeefy.wordpress.com/2015/06/11/powershell-infinite-loops-for-testing-purpose/
+# https://stackoverflow.com/questions/34322988/view-random-ngrok-url-when-run-in-background

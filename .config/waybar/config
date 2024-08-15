@@ -2,13 +2,28 @@
   "position": "top",
   "height": 30,
   "spacing": 4,
-  "modules-left": ["sway/workspaces", "sway/window"],
+  "modules-left": [
+    "sway/workspaces",
+    "sway/mode",
+    "sway/scratchpad",
+    "sway/window"
+  ],
   "modules-center": ["clock"],
   "modules-right": ["network", "wireplumber", "battery", "tray"],
   "sway/window": {
     "format": "{title}",
     "icon": true,
     "icon-size": 24
+  },
+  "sway/mode": {
+    "format": "<span style=\"italic\">{}</span>"
+  },
+  "sway/scratchpad": {
+    "format": "{icon} {count}",
+    "show-empty": false,
+    "format-icons": ["", ""],
+    "tooltip": true,
+    "tooltip-format": "{app}: {title}"
   },
   "network": {
     "format-wifi": "{essid} ({signalStrength}%) ",
@@ -20,7 +35,7 @@
   },
   "wireplumber": {
     "format": "{volume}% {icon}",
-    "format-muted": "",
+    "format-muted": "",
     "format-icons": ["", "", ""],
     "max-volume": 120
   },

@@ -36,7 +36,7 @@
     enable = true;
     type = "fcitx5";
     fcitx5.waylandFrontend = true;
-    fcitx5.addons = with pkgs; [ fcitx5-rime ];
+    fcitx5.addons = with pkgs; [ fcitx5-rime fcitx5-gtk ];
   };
 
   fonts.packages = with pkgs; [
@@ -93,9 +93,13 @@
     firefox
     git
     mpv
-    adwaita-icon-theme
+    yt-dlp
     vscode
+    telegram-desktop
+    adwaita-icon-theme
   ];
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # List services that you want to enable:
 
@@ -114,5 +118,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 }

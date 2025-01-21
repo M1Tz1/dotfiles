@@ -1,8 +1,9 @@
 #!/sbin/openrc-run
+supervisor=supervise-daemon
 
-name="Xray"
-description="A unified platform for anti-censorship."
-supervisor="supervise-daemon"
+name="Xray Daemon"
+description="A unified platform for anti-censorship"
+
 command="/usr/local/bin/xray"
 command_args="run -c /usr/local/etc/xray/config.json"
 
